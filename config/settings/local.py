@@ -18,7 +18,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db_local.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': get_env_variable('DATABASE_LOCAL_NAME'),
+        'USER': get_env_variable('DATABASE_LOCAL_USER'),
+        'PASSWORD': get_env_variable('DATABASE_LOCAL_PASSWORD'),
+        'HOST': get_env_variable('DATABASE_LOCAL_HOST'),
+        'PORT': get_env_variable('DATABASE_LOCAL_PORT')
     }
 }

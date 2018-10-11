@@ -35,11 +35,20 @@ If you want submit your code to Wapyce you need follow the code conventions, the
 2. [Fork the repository](https://help.github.com/articles/fork-a-repo/);
 3. [Install, create and activate a virtualenv](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/);
 4. [Install dependencies](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/#using-requirements-files);
-5. [Create the database schema of Wapyce](https://docs.djangoproject.com/en/2.1/ref/django-admin/#django-admin-migrate);
-6. [Start a web server to run Wapyce](http://goodcode.io/articles/django-nginx-gunicorn/);
-7. Start coding :smile:;
-8. [Commit and push your changes](https://help.github.com/articles/adding-a-file-to-a-repository-using-the-command-line/);
-9. [Do a pull-request](https://help.github.com/articles/creating-a-pull-request/) with a short description explaining briefly what you've done.
+5. [Install PostgreSQL](https://wiki.postgresql.org/wiki/Detailed_installation_guides);
+6. Configure enviroment variables;
+    ```bash
+    export DATABASE_LOCAL_NAME=wapyce_local
+    export DATABASE_LOCAL_USER=postgres
+    export DATABASE_LOCAL_PASSWORD=postgres
+    export DATABASE_LOCAL_HOST=localhost
+    export DATABASE_LOCAL_PORT=5432
+    ```
+7. [Create the database schema of Wapyce](https://docs.djangoproject.com/en/2.1/ref/django-admin/#django-admin-migrate);
+8. [Start a web server to run Wapyce](http://goodcode.io/articles/django-nginx-gunicorn/);
+9. Start coding :smile:;
+10. [Commit and push your changes](https://help.github.com/articles/adding-a-file-to-a-repository-using-the-command-line/);
+11. [Do a pull-request](https://help.github.com/articles/creating-a-pull-request/) with a short description explaining briefly what you've done.
 
 ### Styleguides
 
