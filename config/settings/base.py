@@ -12,6 +12,25 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+from django.core.exceptions import ImproperlyConfigured
+
+def get_env_variable(variable_name):
+    """
+    Returns the value of a environment variable.
+
+    :param variable_name: The name of environment variable.
+    :type variable_name: str
+    :return: The value environment variable.
+    :rtype: str
+    """
+
+    if variable_name in os.environ:
+        return os.environ[variable_name]
+
+    raise ImproperlyConfigured(
+        'Set the {} environment variable'.format(variable_name)
+    )
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,9 +39,6 @@ BASE_DIR = os.path.dirname(
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'SECRET_KEY'
 
 # Application definition
 
