@@ -25,3 +25,7 @@ DATABASES = {
         'PORT': get_env_variable('DATABASE_PORT')
     }
 }
+
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'wapyce', 'staticfiles')
