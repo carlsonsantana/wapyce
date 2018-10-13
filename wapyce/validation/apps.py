@@ -3,6 +3,7 @@ Module to set custom settings for validation application.
 """
 
 from django.apps import AppConfig
+from django.utils.translation import gettext as _
 
 
 class ValidationConfig(AppConfig):
@@ -11,3 +12,4 @@ class ValidationConfig(AppConfig):
     """
 
     name = 'validation'
+    verbose_name = _('Validation')
