@@ -3,6 +3,7 @@ Models of validation app.
 """
 
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from .validators import validate_github_url
@@ -34,6 +35,11 @@ class Site(models.Model):
         return '{} ({})'.format(self.name, self.base_url)
 
 class ValidationGroup(models.Model):
+    """
+    The ValidationGroup class is a model that represents a group of site
+    validations.
+    """
+
     site = models.ForeignKey(
         Site,
         on_delete=models.PROTECT,
@@ -57,5 +63,9 @@ class ValidationGroup(models.Model):
         verbose_name = _('Validation group')
 
     def close_group(self):
+        """
+        Close the validation group.
+        """
+
         self.close_date = timezone.now()
         self.save()
