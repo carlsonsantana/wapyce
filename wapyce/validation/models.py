@@ -32,3 +32,30 @@ class Site(models.Model):
 
     def __str__(self):
         return '{} ({})'.format(self.name, self.base_url)
+
+class ValidationGroup(models.Model):
+    site = models.ForeignKey(
+        Site,
+        on_delete=models.PROTECT,
+        verbose_name=_('Site')
+    )
+    start_date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_('Start date')
+    )
+    close_date = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name=_('Close date')
+    )
+
+    class Meta:
+        """
+        Metadata class of validation group model.
+        """
+
+        verbose_name = _('Validation group')
+
+    def close_group(self):
+        self.close_date = timezone.now()
+        self.save()
