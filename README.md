@@ -15,19 +15,28 @@ To execute the Wapyce follow these instructions:
 3. [Install PostgreSQL](https://wiki.postgresql.org/wiki/Detailed_installation_guides);
 4. Configure enviroment variables;
     ```bash
-    # Database connection for production environment
+    # Production environment
     export DATABASE_NAME=wapyce
     export DATABASE_USER=postgres
     export DATABASE_PASSWORD=postgres
     export DATABASE_HOST=localhost
     export DATABASE_PORT=5432
 
-    # Database connection for development environment
+    # Development environment
+    export DJANGO_SETTINGS_MODULE=config.settings.local
     export DATABASE_LOCAL_NAME=wapyce_local
     export DATABASE_LOCAL_USER=postgres
     export DATABASE_LOCAL_PASSWORD=postgres
     export DATABASE_LOCAL_HOST=localhost
     export DATABASE_LOCAL_PORT=5432
+
+    # Tests environment
+    export DJANGO_SETTINGS_MODULE=config.settings.test
+    export DATABASE_TEST_NAME=wapyce_test
+    export DATABASE_TEST_USER=postgres
+    export DATABASE_TEST_PASSWORD=postgres
+    export DATABASE_TEST_HOST=localhost
+    export DATABASE_TEST_PORT=5432
     ```
 5. [Create the database schema of Wapyce](https://docs.djangoproject.com/en/2.1/ref/django-admin/#django-admin-migrate);
     ```bash
