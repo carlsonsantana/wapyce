@@ -3,11 +3,7 @@ Django settings for wapyce project in test environment.
 """
 
 # pylint: disable=wildcard-import, unused-wildcard-import, unused-import
-from .base import *
-from .local import DEBUG
-from .local import ALLOWED_HOSTS
-from .local import SECRET_KEY
-from .local import EMAIL_BACKEND
+from .base_local import *
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
