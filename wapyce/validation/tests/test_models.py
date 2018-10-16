@@ -10,6 +10,7 @@ from django.db.utils import IntegrityError
 from django.test import TestCase
 
 from wapyce.validation.models import Site
+from wapyce.validation.models import Page
 from wapyce.validation.models import Validation
 from wapyce.validation.models import ValidationGroup
 
@@ -20,10 +21,6 @@ class TestSite(TestCase):
     """
 
     def tearDown(self):
-        """
-        Delete all saved site.
-        """
-
         sites = Site.objects.all()
         for site in sites:
             site.delete()
@@ -123,14 +120,13 @@ class TestValidationGroup(TestCase):
         )
 
     def tearDown(self):
-        """
-        Delete all saved site.
-        """
-
         groups = ValidationGroup.objects.filter(site=self.site)
         for group in groups:
             validations = Validation.objects.filter(group=group)
             for validation in validations:
+                pages = Page.objects.filter(validation_site=validation)
+                for page in pages:
+                    page.delete()
                 validation.delete()
             group.delete()
         self.site.delete()
@@ -169,6 +165,8 @@ class TestValidationGroup(TestCase):
         validation3 = Validation(group=group, user=self.user3)
         validation3.save()
         validation2.cancel_validation()
+        page = Page(validation_site=validation3, page_url=self.site)
+        page.save()
         validation3.finish_validation()
 
         group.close_group()
@@ -209,15 +207,14 @@ class TestValidation(TestCase):
         self.group2.save()
 
     def tearDown(self):
-        """
-        Delete all saved site.
-        """
-
         validations = Validation.objects.filter(
             Q(group=self.group1)
             | Q(group=self.group2)
         )
         for validation in validations:
+            pages = Page.objects.filter(validation_site=validation)
+            for page in pages:
+                page.delete()
             validation.delete()
         self.group1.delete()
         self.group2.delete()
@@ -235,6 +232,8 @@ class TestValidation(TestCase):
         validation1.cancel_validation()
         validation2 = Validation(group=self.group1, user=self.user2)
         validation2.save()
+        page = Page(validation_site=validation2, page_url=self.site.base_url)
+        page.save()
         validation2.finish_validation()
 
         validation3 = Validation(group=self.group2, user=self.user1)
@@ -255,3 +254,65 @@ class TestValidation(TestCase):
             validation2 = Validation(group=self.group2, user=self.user1)
             validation2.clean()
             validation2.save()
+
+class TestPage(TestCase):
+    """
+    Test for validated page model.
+    """
+
+    def setUp(self):
+        self.site = Site(
+            name='Site',
+            base_url='http://www.example.com/',
+            github_url='https://github.com/carlsonsantana/wapyce'
+        )
+        self.site.save()
+        self.user = User.objects.create_user(
+            username='user',
+            email='user@github.com',
+            password='userpassword'
+        )
+        self.group = ValidationGroup(site=self.site)
+        self.group.save()
+        self.validation = Validation(group=self.group, user=self.user)
+        self.validation.save()
+
+    def tearDown(self):
+        pages = Page.objects.filter(validation_site=self.validation)
+        for page in pages:
+            page.delete()
+        self.validation.delete()
+        self.group.delete()
+        self.site.delete()
+        self.user.delete()
+
+    def test_normal_save(self):
+        """
+        Test if django persist a valid validated page object.
+        """
+
+        page = Page(
+            validation_site=self.validation,
+            page_url=self.site.base_url
+        )
+        page.clean()
+        page.save()
+        self.assertEqual(
+            page,
+            Page.objects.filter(
+                validation_site=self.validation
+            ).order_by('?').first()
+        )
+
+    def test_valid_page_url(self):
+        """
+        Test a valid page url constraint.
+        """
+
+        with self.assertRaises(ValidationError):
+            page = Page(
+                validation_site=self.validation,
+                page_url='https://github.com/carlsonsantana/wapyce'
+            )
+            page.clean()
+            page.save()
