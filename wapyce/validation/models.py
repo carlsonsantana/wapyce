@@ -138,6 +138,13 @@ class Validation(models.Model):
         verbose_name=_('Validation status')
     )
 
+    class Meta:
+        """
+        Metadata class of validation model.
+        """
+
+        verbose_name = _('Validation')
+
     def clean(self):
         super(Validation, self).clean()
 
