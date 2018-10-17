@@ -156,7 +156,7 @@ class TestValidationGroup(TestCase):
         group = ValidationGroup(site=self.site)
         group.save()
 
-        self.assertFalse(group.is_closed())
+        self.assertFalse(group.closed)
 
         validation1 = Validation(group=group, user=self.user1)
         validation1.save()
@@ -174,10 +174,10 @@ class TestValidationGroup(TestCase):
         validation2.refresh_from_db()
         validation3.refresh_from_db()
 
-        self.assertTrue(group.is_closed())
-        self.assertTrue(validation1.is_canceled())
-        self.assertTrue(validation2.is_canceled())
-        self.assertTrue(validation3.is_closed())
+        self.assertTrue(group.closed)
+        self.assertTrue(validation1.canceled)
+        self.assertTrue(validation2.canceled)
+        self.assertTrue(validation3.closed)
 
 class TestValidation(TestCase):
     """

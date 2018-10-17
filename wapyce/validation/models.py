@@ -65,7 +65,8 @@ class ValidationGroup(models.Model):
 
         verbose_name = _('Validation group')
 
-    def is_closed(self):
+    @property
+    def closed(self):
         """
         Check that the validation group is closed.
 
@@ -159,7 +160,8 @@ class Validation(models.Model):
                 _('Already exists a validation for the same user.')
             )
 
-    def is_started(self):
+    @property
+    def started(self):
         """
         Check that the validation is started.
 
@@ -169,7 +171,8 @@ class Validation(models.Model):
 
         return self.status == Validation.STARTED
 
-    def is_canceled(self):
+    @property
+    def canceled(self):
         """
         Check that the validation is canceled.
 
@@ -179,7 +182,8 @@ class Validation(models.Model):
 
         return self.status == Validation.CANCELED
 
-    def is_finished(self):
+    @property
+    def finished(self):
         """
         Check that the validation is finished.
 
@@ -189,7 +193,8 @@ class Validation(models.Model):
 
         return self.status == Validation.FINISHED
 
-    def is_closed(self):
+    @property
+    def closed(self):
         """
         Check that the validation is closed.
 
@@ -205,7 +210,7 @@ class Validation(models.Model):
         pages of site.
         """
 
-        if self.is_started():
+        if self.started:
             self.status = Validation.CANCELED
             self.end_date = timezone.now()
             self.save()
@@ -219,7 +224,7 @@ class Validation(models.Model):
         Finish the validation, when the user validate all pages of site.
         """
 
-        if self.is_started():
+        if self.started:
             if not Page.objects.filter(validation_site=self).exists():
                 raise ValidationError(
                     _(
@@ -241,7 +246,7 @@ class Validation(models.Model):
         Close the validation, when the group is closed.
         """
 
-        if self.is_finished():
+        if self.finished:
             self.status = Validation.CLOSED
             self.save()
         else:
