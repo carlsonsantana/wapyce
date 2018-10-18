@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'wapyce.core',
     'wapyce.validation',
     'wapyce.accessibility',
     'wapyce.notifier',
