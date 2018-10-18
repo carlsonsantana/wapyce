@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'wapyce.validation',
     'wapyce.accessibility',
     'wapyce.notifier',
+    'wapyce.feedback',
 ]
 
 MIDDLEWARE = [
