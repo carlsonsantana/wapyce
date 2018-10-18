@@ -9,7 +9,6 @@ from wapyce.validation.models import ValidationGroup
 
 # Create your models here.
 
-# pylint: disable=too-few-public-methods
 class GithubIssue(models.Model):
     """
     The GithubIssue class is a model that represents a issue of GitHub.

@@ -9,7 +9,6 @@ from wapyce.validation.models import Page
 
 # Create your models here.
 
-# pylint: disable=too-few-public-methods
 class IssueCode(models.Model):
     """
     The IssueCode class is a model that represents a code of a issue of page.

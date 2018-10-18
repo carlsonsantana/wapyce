@@ -13,7 +13,6 @@ from .validators import validate_github_url
 
 # Create your models here.
 
-# pylint: disable=too-few-public-methods
 class Site(models.Model):
     """
     The Site class is a model that represents a site that will be validated.
