@@ -1,0 +1,24 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+    <title>{% block title %}{% endblock %}</title>
+	</head>
+	<body>
+    <section>
+      <header><h1>Wapyce</h1></header>
+      <nav>
+        <ul>
+          <li><a href="{% url 'home' %}">{% trans "Home page" %}</a></li>
+        </ul>
+      </nav>
+      <hr />
+      <main>
+        {% block content %}{% endblock %}
+      </main>
+      <hr />
+      <footer><p>{% trans "Copyright (c) 2018 Wapyce" %}</p></footer>
+    </section>
+	</body>
+</html>
