@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'wapyce.validation',
     'wapyce.accessibility',
+    'wapyce.notifier',
 ]
 
 MIDDLEWARE = [
