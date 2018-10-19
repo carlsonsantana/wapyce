@@ -17,7 +17,7 @@ To execute the Wapyce follow these instructions:
 5. Configure enviroment variables;
     ```bash
     # For production environment
-    export SECRET=SECRET
+    export SECRET_KEY=SECRET_KEY
     export DJANGO_SETTINGS_MODULE=config.settings.production
     export DATABASE_NAME=wapyce
     export DATABASE_USER=postgres
