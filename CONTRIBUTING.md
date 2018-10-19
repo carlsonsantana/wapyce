@@ -81,9 +81,10 @@ The Wapyce follow the [PEP 8 -- Style Guide for Python Code](https://www.python.
 ## Donate
   
 If you'd like to monetarily support Wapyce development, you can:
-* Donate Bitcoin to **3DzvMCoPuuaZP9Dbae9XwLVTKPQwoSGekE** wallet address;
-* Donate Ethereum to **0xc6f8044d00cf81af6454686c5e534b3264d8f0ec** wallet address;
-* Donate Litecoin to **LPw8kqaDhWYXnvF6CtWu7wGi7y13ZLGvqv** wallet address;
-* Donate Waves to **3P3cQMfHRx9v2HGnC7GEhKMEkEmJ8ci3iUJ** wallet address;
-* Donate Zcash to **t1Xr969DyaPQepC99QDDmM8jWUnzAWqayfv** wallet address;
-* Donate Bitcoin Cash to **qqgjytjnemnls59rvjjq0vfsnuf034d86ugty3j9qj** wallet address.
+
+* Donate Bitcoin to **36QNXpPzUDLdt611E2t3wdr9zBhWePBJga** wallet address;
+* Donate Ethereum to **0xd7446224eb2da4f41f5f68f82be01e1f5fa1940e** wallet address;
+* Donate Litecoin to **LVgF8LE8n6jFrKKfYZoyh9eckx2oBxcaGP** wallet address;
+* Donate Waves to **3P7Hapj4Kvbn1k9GN2reb8aUsyDjNPy6pbS** wallet address;
+* Donate Zcash to **t1dpafSCveZqa4mwk5Lrf55uKzPLVWCQLf6** wallet address;
+* Donate Bitcoin Cash to **qp5sz7q3yxhrca7cvq54wktrk8392pgd9ucetl3w6n** wallet address.
