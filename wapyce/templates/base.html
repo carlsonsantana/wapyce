@@ -11,6 +11,16 @@
       <nav>
         <ul>
           <li><a href="{% url 'home' %}">{% trans "Home page" %}</a></li>
+          {% if not user.is_authenticated %}
+            <li><a href="{% url 'social:begin' 'github' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans "Login with Github" %}</a></li>
+          {% else %}
+            <li>
+              <strong>{% trans "Account" %}</strong>
+              <ul>
+                <li><a href="{% url 'logout' %}">{% trans "Logout" %}</a></li>
+              </li>
+            </li>
+          {% endif %}
         </ul>
       </nav>
       <hr />

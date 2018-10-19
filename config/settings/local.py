@@ -18,3 +18,6 @@ DATABASES = {
         'PORT': get_env_variable('DATABASE_LOCAL_PORT')
     }
 }
+
+SOCIAL_AUTH_GITHUB_KEY = get_env_variable('GITHUB_LOCAL_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = get_env_variable('GITHUB_LOCAL_SECRET')

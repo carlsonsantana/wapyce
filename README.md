@@ -13,24 +13,31 @@ To execute the Wapyce follow these instructions:
     pip install -r requirements.txt
     ```
 3. [Install PostgreSQL](https://wiki.postgresql.org/wiki/Detailed_installation_guides);
-4. Configure enviroment variables;
+4. [Create an OAuth app on Github](https://simpleisbetterthancomplex.com/tutorial/2016/10/24/how-to-add-social-login-to-django.html#github-authentication);
+5. Configure enviroment variables;
     ```bash
-    # Production environment
+    # For production environment
+    export SECRET=SECRET
+    export DJANGO_SETTINGS_MODULE=config.settings.production
     export DATABASE_NAME=wapyce
     export DATABASE_USER=postgres
     export DATABASE_PASSWORD=postgres
     export DATABASE_HOST=localhost
     export DATABASE_PORT=5432
+    export GITHUB_KEY=GITHUB_KEY
+    export GITHUB_SECRET=GITHUB_SECRET
 
-    # Development environment
+    # For development environment
     export DJANGO_SETTINGS_MODULE=config.settings.local
     export DATABASE_LOCAL_NAME=wapyce_local
     export DATABASE_LOCAL_USER=postgres
     export DATABASE_LOCAL_PASSWORD=postgres
     export DATABASE_LOCAL_HOST=localhost
     export DATABASE_LOCAL_PORT=5432
+    export GITHUB_LOCAL_KEY=GITHUB_LOCAL_KEY
+    export GITHUB_LOCAL_SECRET=GITHUB_LOCAL_SECRET
 
-    # Tests environment
+    # For test environment
     export DJANGO_SETTINGS_MODULE=config.settings.test
     export DATABASE_TEST_NAME=wapyce_test
     export DATABASE_TEST_USER=postgres
@@ -38,11 +45,11 @@ To execute the Wapyce follow these instructions:
     export DATABASE_TEST_HOST=localhost
     export DATABASE_TEST_PORT=5432
     ```
-5. [Create the database schema of Wapyce](https://docs.djangoproject.com/en/2.1/ref/django-admin/#django-admin-migrate);
+6. [Create the database schema of Wapyce](https://docs.djangoproject.com/en/2.1/ref/django-admin/#django-admin-migrate);
     ```bash
     python manage.py migrate
     ```
-6. [Start a web server to run Wapyce](http://goodcode.io/articles/django-nginx-gunicorn/).
+7. [Start a web server to run Wapyce](http://goodcode.io/articles/django-nginx-gunicorn/).
 
 ## Contributing
 

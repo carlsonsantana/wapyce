@@ -28,4 +28,7 @@ DATABASES = {
 
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
+SOCIAL_AUTH_GITHUB_KEY = get_env_variable('GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = get_env_variable('GITHUB_SECRET')
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'wapyce', 'staticfiles')
