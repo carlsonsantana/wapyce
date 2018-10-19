@@ -15,15 +15,15 @@ First off, thank you for considering contributing to Wapyce.
 
 ## Code of conduct
 
-This project and everyone participating in it is governed by the [Wapyce code of conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [3837162+carlsonsantana@users.noreply.github.com](mailto:3837162+carlsonsantana@users.noreply.github.com).
+This project and everyone participating in it is governed by the [Wapyce code of conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [wapyce@protonmail.com](wapyce@protonmail.com).
 
 ## Reporting bugs and request new feature
 
 This section guides you through submitting a bug report or request new feature for Wapyce.
 
-Before submitting a bug report or request feature check if you're using the latest version of Wapyce and [ensure the bug or feature was not already reported](https://github.com/carlsonsantana/wapyce/issues).
+Before submitting a bug report or request feature check if you're using the latest version of Wapyce and [ensure the bug or feature was not already reported](https://github.com/wapyce/wapyce/issues).
 
-If you're unable to find an open issue addressing the problem or requesting this feature, [open a new one issue](https://github.com/carlsonsantana/wapyce/issues/new).
+If you're unable to find an open issue addressing the problem or requesting this feature, [open a new one issue](https://github.com/wapyce/wapyce/issues/new).
 
 ## Code contribution
 
