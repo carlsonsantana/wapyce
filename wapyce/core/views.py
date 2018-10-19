@@ -15,6 +15,13 @@ def home(request):
 
     return render(request, 'home.html')
 
+def donate(request):
+    """
+    View of donate page.
+    """
+
+    return render(request, 'donate.html')
+
 def login(request):
     """
     View of login page.
