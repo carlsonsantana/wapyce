@@ -12,3 +12,9 @@ class CoreConfig(AppConfig):
 
     name = 'wapyce.core'
     verbose_name = _('Core')
+
+    def ready(self):
+        super(CoreConfig, self).ready()
+
+        # pylint: disable=unused-variable
+        import wapyce.core.signals
