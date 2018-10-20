@@ -29,7 +29,7 @@ def login(request):
 
     if request.user.is_authenticated:
         return redirect('home')
-    return render(request, 'login.html')
+    return render(request, 'account/login.html')
 
 def logout_view(request):
     """

@@ -11,7 +11,7 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('donate/', views.donate, name='donate'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    path('account/login/', views.login, name='login'),
+    path('account/logout/', views.logout_view, name='logout'),
     path('oauth/', include('social_django.urls', namespace='social')),
 ]
