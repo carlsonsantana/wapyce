@@ -2,10 +2,12 @@
 Views of core application.
 """
 
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import render
+from django.utils.translation import gettext as _
 
 from rest_framework.authtoken.models import Token
 
@@ -50,3 +52,14 @@ def settings_view(request):
 
     token = Token.objects.get(user=request.user)
     return render(request, 'account/settings.html', {'user_token': token})
+
+@login_required
+def new_user_token(request):
+    """
+    View to generate a new token for user.
+    """
+
+    Token.objects.get(user=request.user).delete()
+    Token.objects.create(user=request.user)
+    messages.success(request, _('New user token created.'))
+    return redirect('settings')

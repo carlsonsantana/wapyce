@@ -17,6 +17,9 @@
       {% blocktrans %}
         Your token: <strong>{{ user_token }}</strong>
       {% endblocktrans %}
+      <sup><a href="{% url 'new_user_token' %}">
+        {% trans "Generate new token" %}
+      </a></sup>
     </p>
   </div>
 </section>
