@@ -5,6 +5,7 @@ Models of accessibility app.
 from django.db import models
 from django.utils.translation import gettext as _
 
+from wapyce.core.models import CoreModel
 from wapyce.validation.models import Page
 
 # Create your models here.
@@ -30,7 +31,7 @@ class IssueCode(models.Model):
     def __str__(self):
         return self.code
 
-class IssuePage(models.Model):
+class IssuePage(CoreModel):
     """
     The IssuePage class is a model that represents a issue of page.
     """

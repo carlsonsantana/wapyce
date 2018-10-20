@@ -9,11 +9,12 @@ from django.db import transaction
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
+from wapyce.core.models import CoreModel
 from .validators import validate_github_url
 
 # Create your models here.
 
-class Site(models.Model):
+class Site(CoreModel):
     """
     The Site class is a model that represents a site that will be validated.
     """
@@ -36,7 +37,7 @@ class Site(models.Model):
     def __str__(self):
         return '{} ({})'.format(self.name, self.base_url)
 
-class ValidationGroup(models.Model):
+class ValidationGroup(CoreModel):
     """
     The ValidationGroup class is a model that represents a group of site
     validations.
@@ -97,7 +98,7 @@ class ValidationGroup(models.Model):
             self.close_date = timezone.now()
             self.save()
 
-class Validation(models.Model):
+class Validation(CoreModel):
     """
     The Validation class is a model that represents a validation of site.
     """

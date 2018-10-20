@@ -7,12 +7,13 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext as _
 
+from wapyce.core.models import CoreModel
 from wapyce.validation.models import ValidationGroup
 from wapyce.validation.models import Validation
 
 # Create your models here.
 
-class FeedbackValidation(models.Model):
+class FeedbackValidation(CoreModel):
     """
     The FeedbackValidation class is a model that represents a feedback of
     validations.
