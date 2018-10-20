@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Settings" %} - Wapyce{% endblock %}
+{% block content %}
+<section>
+  <header><h2>{% trans "User token" %}</h2></header>
+  <div>
+    <p>
+      {% blocktrans %}
+        With your token you can validate a site and submit the results of
+        validation for us.
+      {% endblocktrans %}
+    </p>
+    <p>
+      {% blocktrans %}
+        Your token: <strong>{{ user_token }}</strong>
+      {% endblocktrans %}
+    </p>
+  </div>
+</section>
+{% endblock %}

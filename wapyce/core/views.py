@@ -3,8 +3,11 @@ Views of core application.
 """
 
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.shortcuts import render
+
+from rest_framework.authtoken.models import Token
 
 # Create your views here.
 
@@ -38,3 +41,12 @@ def logout_view(request):
 
     logout(request)
     return redirect('home')
+
+@login_required
+def settings_view(request):
+    """
+    View to settings page of user.
+    """
+
+    token = Token.objects.get(user=request.user)
+    return render(request, 'account/settings.html', {'user_token': token})
