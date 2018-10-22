@@ -7,6 +7,7 @@ from django.utils.translation import gettext as _
 
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import CreateAPIView
+from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from wapyce.validation.models import Site
@@ -47,3 +48,30 @@ class NewValidationAPIView(CreateAPIView):
         group = ValidationGroup.objects.get_or_create(site=site)[0]
 
         serializer.save(user=user, group=group)
+
+class CancelValidationAPIView(UpdateAPIView):
+    """
+    View of API to cancel the validation of user.
+    """
+
+    queryset = Validation.objects.all()
+    serializer_class = ValidationSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'uuid'
+
+    def perform_update(self, serializer):
+        """
+        Cancel the validation of user, if the user has a validation started.
+        """
+
+        query = Validation.objects.filter(
+            user=self.request.user,
+            status=Validation.STARTED
+        )
+        if not query.exists():
+            raise ValidationError(_('The user not has a validation started.'))
+
+        validation = query.first()
+        validation.cancel_validation()
+        serializer.data['end_date'] = validation.end_date
+        serializer.data['status'] = validation.status
