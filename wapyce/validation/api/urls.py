@@ -9,7 +9,7 @@ from . import views
 # pylint: disable=invalid-name
 urlpatterns = [
     path(
-        'new_validation/',
+        'validations/',
         views.NewValidationAPIView.as_view(),
         name='new_validation'
     ),
