@@ -21,5 +21,6 @@ from django.urls import path
 # pylint: disable=invalid-name
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('wapyce.core.urls'))
+    path('api/v1/validation/', include('wapyce.validation.api.urls')),
+    path('', include('wapyce.core.urls')),
 ]
