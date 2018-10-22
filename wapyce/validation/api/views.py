@@ -79,6 +79,33 @@ class CancelValidationAPIView(UpdateAPIView):
         serializer.data['end_date'] = validation.end_date
         serializer.data['status'] = validation.status
 
+class FinishValidationAPIView(UpdateAPIView):
+    """
+    View of API to finish the validation of user.
+    """
+
+    queryset = Validation.objects.all()
+    serializer_class = ValidationSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'uuid'
+
+    def perform_update(self, serializer):
+        """
+        Finish the validation of user, if the user has a validation started.
+        """
+
+        query = Validation.objects.filter(
+            user=self.request.user,
+            status=Validation.STARTED
+        )
+        if not query.exists():
+            raise ValidationError(_('The user not has a validation started.'))
+
+        validation = query.first()
+        validation.finish_validation()
+        serializer.data['end_date'] = validation.end_date
+        serializer.data['status'] = validation.status
+
 class NewPageAPIView(CreateAPIView):
     """
     View of API to register the page of validation of user.
