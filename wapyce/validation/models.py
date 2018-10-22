@@ -254,7 +254,7 @@ class Validation(CoreModel):
                 _('Only finished validations can be closed.')
             )
 
-class Page(models.Model):
+class Page(CoreModel):
     """
     The Page class is a model that represents a validated page of site.
     """
@@ -283,8 +283,5 @@ class Page(models.Model):
         base_url = self.validation_site.group.site.base_url
         if not self.page_url.startswith(base_url):
             raise ValidationError(
-                _('The page URL must starts with "{}" not "{}".').format(
-                    base_url,
-                    self.page_url
-                )
+                _('The page URL must starts with "{}".').format(base_url)
             )

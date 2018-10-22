@@ -18,4 +18,5 @@ urlpatterns = [
         views.CancelValidationAPIView.as_view(),
         name='cancel_validation'
     ),
+    path('pages/', views.NewPageAPIView.as_view(), name='new_page'),
 ]

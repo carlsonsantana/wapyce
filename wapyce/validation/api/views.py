@@ -5,6 +5,7 @@ Views of API validation application.
 from django.db.models import Q
 from django.utils.translation import gettext as _
 
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import CreateAPIView
 from rest_framework.generics import UpdateAPIView
@@ -13,7 +14,9 @@ from rest_framework.permissions import IsAuthenticated
 from wapyce.validation.models import Site
 from wapyce.validation.models import Validation
 from wapyce.validation.models import ValidationGroup
+from wapyce.validation.models import Page
 from .serializers import ValidationSerializer
+from .serializers import PageSerializer
 
 class NewValidationAPIView(CreateAPIView):
     """
@@ -75,3 +78,32 @@ class CancelValidationAPIView(UpdateAPIView):
         validation.cancel_validation()
         serializer.data['end_date'] = validation.end_date
         serializer.data['status'] = validation.status
+
+class NewPageAPIView(CreateAPIView):
+    """
+    View of API to register the page of validation of user.
+    """
+
+    queryset = Page.objects.all()
+    serializer_class = PageSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        """
+        Register the page of validation of user.
+        """
+
+        validation = serializer.validated_data['validation_site']
+        if (
+            (validation.user != self.request.user)
+            or (validation.status != Validation.STARTED)
+        ):
+            raise PermissionDenied()
+        base_url = validation.group.site.base_url
+        page_url = serializer.validated_data['page_url']
+        if not page_url.startswith(base_url):
+            raise ValidationError(
+                _('The page URL must starts with "{}".').format(base_url)
+            )
+
+        serializer.save()
