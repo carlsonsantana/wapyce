@@ -94,10 +94,7 @@ class NewPageAPIView(CreateAPIView):
         """
 
         validation = serializer.validated_data['validation_site']
-        if (
-            (validation.user != self.request.user)
-            or (validation.status != Validation.STARTED)
-        ):
+        if (validation.user != self.request.user) or (not validation.started):
             raise PermissionDenied()
         base_url = validation.group.site.base_url
         page_url = serializer.validated_data['page_url']
