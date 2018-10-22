@@ -22,5 +22,6 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/validation/', include('wapyce.validation.api.urls')),
+    path('api/v1/accessibility/', include('wapyce.accessibility.api.urls')),
     path('', include('wapyce.core.urls')),
 ]
