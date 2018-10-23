@@ -77,6 +77,7 @@ If you want submit your code to Wapyce you need follow the code conventions, the
   * :wrench: `:wrench:` Tooling
   * :lock: `:lock:` Security
   * :heavy_check_mark: `:heavy_check_mark:` Tests
+  * :lipstick: `:lipstick:` UI Cosmetic
 
 #### Python styleguide
 
