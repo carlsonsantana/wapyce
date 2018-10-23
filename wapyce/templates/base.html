@@ -49,7 +49,7 @@
         </div>
       </nav>
       {% if messages %}
-        <hr />
+        <hr class="sr-only" />
         <div>
           <ul class="messages">
             {% for message in messages %}
@@ -58,11 +58,11 @@
           </ul>
         </div>
       {% endif %}
-      <hr />
+      <hr class="sr-only" />
       <main>
         {% block content %}{% endblock %}
       </main>
-      <hr />
+      <hr class="sr-only" />
       <footer><p>{% trans "Copyright (c) 2018 Wapyce" %}</p></footer>
     </section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
