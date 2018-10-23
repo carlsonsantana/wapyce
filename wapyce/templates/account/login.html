@@ -3,13 +3,27 @@
 {% load i18n %}
 
 {% block title %}{% trans "Login" %} - Wapyce{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/brands.css" integrity="sha384-Px1uYmw7+bCkOsNAiAV5nxGKJ0Ixn5nChyW8lCK1Li1ic9nbO5pC/iXaq27X5ENt" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/fontawesome.css" integrity="sha384-BzCy2fixOYd0HObpx3GMefNqdbA7Qjcc91RgYeDjrHTIEXqiF00jKvgQG0+zY/7I" crossorigin="anonymous">
+{% endblock %}
 {% block content %}
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
       <section>
         <header><h2>{% trans "Login" %}</h2></header>
-        <div>
-          <a href="{% url 'social:begin' 'github' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans "Login with Github" %}</a>
+        <article>
+          {% blocktrans %}
+            <strong>Wapyce</strong> use social login of
+            <a href="https://github.com/" target="_blank">GitHub</a> for
+            authentication.
+          {% endblocktrans %}
+        </article>
+        <div class="text-center">
+          <a href="{% url 'social:begin' 'github' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" class="btn btn-default btn-lg">
+            <span class="fab fa-github"></span>
+            {% trans "Login with Github" %}
+          </a>
         </div>
       </section>
     </div>
