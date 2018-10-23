@@ -5,64 +5,70 @@
 
 {% block title %}{% trans "Donate" %} - Wapyce{% endblock %}
 {% block content %}
-  <section>
-      <header><h2>{% trans "Donate" %}</h2></header>
-      <article>
-        <p>
-          {% blocktrans %}
-            If you'd like to monetarily support Wapyce development, you can:
-          {% endblocktrans %}
-          <div>
-            <figure>
-              <img src="{% static 'img/wallets/bitcoin.png' %}" alt="{% trans 'Bitcoin wallet address' %}" />
-              <figcaption>
-                {% blocktrans %}
-                  Donate Bitcoin to <strong>36QNXpPzUDLdt611E2t3wdr9zBhWePBJga</strong> wallet address;
-                {% endblocktrans %}
-              </figcaption>
-            </figure>
-            <figure>
-              <img src="{% static 'img/wallets/ethereum.png' %}" alt="{% trans 'Ethereum wallet address' %}" />
-              <figcaption>
-                {% blocktrans %}
-                  Donate Ethereum to <strong>0xd7446224eb2da4f41f5f68f82be01e1f5fa1940e</strong> wallet address;
-                {% endblocktrans %}
-              </figcaption>
-            </figure>
-            <figure>
-              <img src="{% static 'img/wallets/litecoin.png' %}" alt="{% trans 'Litecoin wallet address' %}" />
-              <figcaption>
-                {% blocktrans %}
-                  Donate Litecoin to <strong>LVgF8LE8n6jFrKKfYZoyh9eckx2oBxcaGP</strong> wallet address;
-                {% endblocktrans %}
-              </figcaption>
-            </figure>
-            <figure>
-              <img src="{% static 'img/wallets/waves.png' %}" alt="{% trans 'Waves wallet address' %}" />
-              <figcaption>
-                {% blocktrans %}
-                  Donate Waves to <strong>3P7Hapj4Kvbn1k9GN2reb8aUsyDjNPy6pbS</strong> wallet address;
-                {% endblocktrans %}
-              </figcaption>
-            </figure>
-            <figure>
-              <img src="{% static 'img/wallets/zcash.png' %}" alt="{% trans 'Zcash wallet address' %}" />
-              <figcaption>
-                {% blocktrans %}
-                  Donate Zcash to <strong>t1dpafSCveZqa4mwk5Lrf55uKzPLVWCQLf6</strong> wallet address;
-                {% endblocktrans %}
-              </figcaption>
-            </figure>
-            <figure>
-              <img src="{% static 'img/wallets/bitcoincash.png' %}" alt="{% trans 'Bitcoin Cash wallet address' %}" />
-              <figcaption>
-                {% blocktrans %}
-                  Donate Bitcoin Cash to <strong>qp5sz7q3yxhrca7cvq54wktrk8392pgd9ucetl3w6n</strong> wallet address.
-                {% endblocktrans %}
-              </figcaption>
-            </figure>
-          </div>
-        </p>
-      </article>
-  </section>
+  <h2>{% trans "Donate" %}</h2>
+  <article>
+    <p>
+      {% blocktrans %}
+        If you'd like to monetarily support Wapyce development, you can:
+      {% endblocktrans %}
+    </p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 col-md-4">
+          <figure class="thumbnail">
+            <img src="{% static 'img/wallets/bitcoin.png' %}" alt="{% trans 'Bitcoin wallet address' %}" />
+            <figcaption class="caption text-center">
+              <h3>{% trans "Bitcoin wallet address" %}</h3>
+              <strong>36QNXpPzUDLdt611E2t3wdr9zBhWePBJga</strong>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <figure class="thumbnail">
+            <img src="{% static 'img/wallets/ethereum.png' %}" alt="{% trans 'Ethereum wallet address' %}" />
+            <figcaption class="caption text-center">
+              <h3>{% trans "Ethereum wallet address" %}</h3>
+              <strong>0xd7446224eb2da4f41f5f68f82be01e1f5fa1940e</strong>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <figure class="thumbnail">
+            <img src="{% static 'img/wallets/litecoin.png' %}" alt="{% trans 'Litecoin wallet address' %}" />
+            <figcaption class="caption text-center">
+              <h3>{% trans "Litecoin wallet address" %}</h3>
+              <strong>LVgF8LE8n6jFrKKfYZoyh9eckx2oBxcaGP</strong>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <figure class="thumbnail">
+            <img src="{% static 'img/wallets/waves.png' %}" alt="{% trans 'Waves wallet address' %}" />
+            <figcaption class="caption text-center">
+              <h3>{% trans "Waves wallet address" %}</h3>
+              <strong>3P7Hapj4Kvbn1k9GN2reb8aUsyDjNPy6pbS</strong>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <figure class="thumbnail">
+            <img src="{% static 'img/wallets/zcash.png' %}" alt="{% trans 'Zcash wallet address' %}" />
+            <figcaption class="caption text-center">
+              <h3>{% trans "Zcash wallet address" %}</h3>
+              <strong>t1dpafSCveZqa4mwk5Lrf55uKzPLVWCQLf6</strong>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <figure class="thumbnail">
+            <img src="{% static 'img/wallets/bitcoincash.png' %}" alt="{% trans 'Bitcoin Cash wallet address' %}" />
+            <figcaption class="caption text-center">
+              <h3>{% trans "Bitcoin Cash wallet address" %}</h3>
+              <strong>qp5sz7q3yxhrca7cvq54wktrk8392pgd9ucetl3w6n</strong>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </article>
 {% endblock %}
