@@ -4,5 +4,14 @@
 
 {% block title %}{% trans "Login" %} - Wapyce{% endblock %}
 {% block content %}
-  <a href="{% url 'social:begin' 'github' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans "Login with Github" %}</a>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <section>
+        <header><h2>{% trans "Login" %}</h2></header>
+        <div>
+          <a href="{% url 'social:begin' 'github' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans "Login with Github" %}</a>
+        </div>
+      </section>
+    </div>
+  </div>
 {% endblock %}

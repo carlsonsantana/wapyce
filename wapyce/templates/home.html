@@ -4,29 +4,33 @@
 
 {% block title %}{% trans "Home page" %} - Wapyce{% endblock %}
 {% block content %}
-  <section>
-      <header><h2>{% trans "About" %}</h2></header>
-      <article>
-        <p>
-          {% blocktrans %}
-            <strong>Wapyce</strong> is a web application with objective to
-            store results of accessibility validations of templates available
-            on Github, to notify the developers about issues found during
-            validation.
-          {% endblocktrans %}
-        </p>
-      </article>
-  </section>
-  <section>
-      <header><h2>{% trans "How to validate" %}</h2></header>
-      <article>
-        <p>
-          {% blocktrans %}
-            To help us to validate templates,
-            <a href="https://github.com/wapyce/wapyce_bot" target="_blank">
-            follow these steps to execute the Wapyce Bot</a>.
-          {% endblocktrans %}
-        </p>
-      </article>
-  </section>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <section>
+        <header><h2>{% trans "About" %}</h2></header>
+        <article>
+          <p>
+            {% blocktrans %}
+              <strong>Wapyce</strong> is a web application with objective to
+              store results of accessibility validations of templates available
+              on Github, to notify the developers about issues found during
+              validation.
+            {% endblocktrans %}
+          </p>
+        </article>
+      </section>
+      <section>
+        <header><h2>{% trans "How to validate" %}</h2></header>
+        <article>
+          <p>
+            {% blocktrans %}
+              To help us to validate templates,
+              <a href="https://github.com/wapyce/wapyce_bot" target="_blank">
+              follow these steps to execute the Wapyce Bot</a>.
+            {% endblocktrans %}
+          </p>
+        </article>
+      </section>
+    </div>
+  </div>
 {% endblock %}

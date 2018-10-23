@@ -4,23 +4,27 @@
 
 {% block title %}{% trans "Settings" %} - Wapyce{% endblock %}
 {% block content %}
-<section>
-  <header><h2>{% trans "User token" %}</h2></header>
-  <div>
-    <p>
-      {% blocktrans %}
-        With your token you can validate a site and submit the results of
-        validation for us.
-      {% endblocktrans %}
-    </p>
-    <p>
-      {% blocktrans %}
-        Your token: <strong>{{ user_token }}</strong>
-      {% endblocktrans %}
-      <sup><a href="{% url 'new_user_token' %}">
-        {% trans "Generate new token" %}
-      </a></sup>
-    </p>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <section>
+        <header><h2>{% trans "User token" %}</h2></header>
+        <div>
+          <p>
+            {% blocktrans %}
+              With your token you can validate a site and submit the results of
+              validation for us.
+            {% endblocktrans %}
+          </p>
+          <p>
+            {% blocktrans %}
+              Your token: <strong>{{ user_token }}</strong>
+            {% endblocktrans %}
+            <sup><a href="{% url 'new_user_token' %}">
+              {% trans "Generate new token" %}
+            </a></sup>
+          </p>
+        </div>
+      </section>
+    </div>
   </div>
-</section>
 {% endblock %}
