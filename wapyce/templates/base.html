@@ -32,6 +32,7 @@
             <ul class="nav navbar-nav navbar-right">
               <li><a href="{% url 'home' %}">{% trans "Home page" %}</a></li>
               <li><a href="{% url 'donate' %}">{% trans "Donate" %}</a></li>
+              <li><a href="https://github.com/wapyce/wapyce">Github</a></li>
               {% if not user.is_authenticated %}
                 <li><a href="{% url 'social:begin' 'github' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{% trans "Login with Github" %}</a></li>
               {% else %}
