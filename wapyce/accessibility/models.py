@@ -57,7 +57,7 @@ class IssuePage(CoreModel):
     )
     context = models.CharField(max_length=255, verbose_name=_('Context'))
     message = models.CharField(max_length=255, verbose_name=_('Message'))
-    selector = models.CharField(max_length=100, verbose_name=_('Selector'))
+    selector = models.CharField(max_length=200, verbose_name=_('Selector'))
     issue_type = models.IntegerField(
         choices=TYPE_CHOICES,
         verbose_name=_('Type')
