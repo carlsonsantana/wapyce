@@ -55,9 +55,18 @@ class IssuePage(CoreModel):
         on_delete=models.PROTECT,
         verbose_name=_('Issue code')
     )
-    context = models.CharField(max_length=255, verbose_name=_('Context'))
+    context = models.CharField(
+        max_length=255,
+        verbose_name=_('Context'),
+        null=True,
+        blank=True,
+    )
     message = models.CharField(max_length=255, verbose_name=_('Message'))
-    selector = models.CharField(max_length=200, verbose_name=_('Selector'))
+    selector = models.CharField(
+        max_length=200,
+        verbose_name=_('Selector'),
+        blank=True,
+    )
     issue_type = models.IntegerField(
         choices=TYPE_CHOICES,
         verbose_name=_('Type')
