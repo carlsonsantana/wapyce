@@ -44,7 +44,7 @@ class NewValidationAPIView(CreateAPIView):
         site = Site.objects.filter(
             Q(validation__isnull=True)
             | Q(validation__status=Validation.CANCELED)
-        ).order_by('?').first()
+        ).filter(status=Site.ACTIVE).order_by('?').first()
 
         serializer.save(user=user, site=site)
 

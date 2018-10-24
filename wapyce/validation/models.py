@@ -18,12 +18,24 @@ class Site(CoreModel):
     The Site class is a model that represents a site that will be validated.
     """
 
+    ACTIVE = 0
+    DEACTIVATED = 1
+    STATUS_CHOICES = (
+        (ACTIVE, _('Active')),
+        (DEACTIVATED, _('Deactivated')),
+    )
+
     name = models.CharField(max_length=100, verbose_name=_('Name'))
     base_url = models.URLField(unique=True, verbose_name=_('Base URL'))
     github_url = models.URLField(
         unique=True,
         verbose_name=_('Github repository'),
         validators=[validate_github_url]
+    )
+    status = models.IntegerField(
+        default=ACTIVE,
+        choices=STATUS_CHOICES,
+        verbose_name=_('Site status')
     )
 
     class Meta:
@@ -35,6 +47,28 @@ class Site(CoreModel):
 
     def __str__(self):
         return '{} ({})'.format(self.name, self.base_url)
+
+    @property
+    def active(self):
+        """
+        Check that the site is active.
+
+        :return: True if the site is active or False if not.
+        :rtype: bool
+        """
+
+        return self.status == Site.ACTIVE
+
+    @property
+    def canceled(self):
+        """
+        Check that the site is deactivated.
+
+        :return: True if the site is deactivated or False if not.
+        :rtype: bool
+        """
+
+        return self.status == Site.DEACTIVATED
 
 class Validation(CoreModel):
     """
