@@ -9,7 +9,6 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import CreateAPIView
 from rest_framework.generics import UpdateAPIView
-from rest_framework.permissions import IsAuthenticated
 
 from wapyce.validation.models import Site
 from wapyce.validation.models import Validation
@@ -25,7 +24,6 @@ class NewValidationAPIView(CreateAPIView):
 
     queryset = Validation.objects.all()
     serializer_class = ValidationSerializer
-    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         """
@@ -59,7 +57,6 @@ class CancelValidationAPIView(UpdateAPIView):
 
     queryset = Validation.objects.all()
     serializer_class = ValidationSerializer
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
 
     def perform_update(self, serializer):
@@ -86,7 +83,6 @@ class FinishValidationAPIView(UpdateAPIView):
 
     queryset = Validation.objects.all()
     serializer_class = ValidationSerializer
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
 
     def perform_update(self, serializer):
@@ -113,7 +109,6 @@ class NewPageAPIView(CreateAPIView):
 
     queryset = Page.objects.all()
     serializer_class = PageSerializer
-    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         """

@@ -4,7 +4,6 @@ Views of API accessibility application.
 
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import IsAuthenticated
 
 from wapyce.accessibility.models import IssueCode
 from wapyce.accessibility.models import IssuePage
@@ -17,7 +16,6 @@ class NewIssueAPIView(CreateAPIView):
 
     queryset = IssuePage.objects.all()
     serializer_class = IssuePageSerializer
-    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         """
