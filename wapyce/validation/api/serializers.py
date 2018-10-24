@@ -6,23 +6,6 @@ from rest_framework import serializers
 
 from wapyce.validation.models import Page
 from wapyce.validation.models import Validation
-from wapyce.validation.models import ValidationGroup
-
-class ValidationGroupSerializer(serializers.ModelSerializer):
-    """
-    The ValidationGroupSerializer class is a serializer of ValidationGroup
-    model.
-    """
-
-    site = serializers.SlugRelatedField(read_only=True, slug_field='base_url')
-
-    class Meta:
-        """
-        Metadata class of validation group serializer.
-        """
-
-        model = ValidationGroup
-        fields = ('uuid', 'site')
 
 class ValidationSerializer(serializers.ModelSerializer):
     """
@@ -33,7 +16,7 @@ class ValidationSerializer(serializers.ModelSerializer):
         read_only=True,
         slug_field='username'
     )
-    group = ValidationGroupSerializer(read_only=True)
+    site = serializers.SlugRelatedField(read_only=True, slug_field='base_url')
 
     class Meta:
         """
@@ -41,7 +24,7 @@ class ValidationSerializer(serializers.ModelSerializer):
         """
 
         model = Validation
-        fields = ('uuid', 'group', 'user', 'start_date', 'end_date', 'status')
+        fields = ('uuid', 'site', 'user', 'start_date', 'end_date', 'status')
         read_only_fields = ('end_date', 'status')
 
 class PageSerializer(serializers.ModelSerializer):

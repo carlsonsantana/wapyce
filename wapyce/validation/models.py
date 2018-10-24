@@ -5,7 +5,6 @@ Models of validation app.
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db import transaction
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
@@ -37,67 +36,6 @@ class Site(CoreModel):
     def __str__(self):
         return '{} ({})'.format(self.name, self.base_url)
 
-class ValidationGroup(CoreModel):
-    """
-    The ValidationGroup class is a model that represents a group of site
-    validations.
-    """
-
-    site = models.ForeignKey(
-        Site,
-        on_delete=models.PROTECT,
-        verbose_name=_('Site')
-    )
-    start_date = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name=_('Start date')
-    )
-    close_date = models.DateTimeField(
-        null=True,
-        blank=True,
-        verbose_name=_('Close date')
-    )
-
-    class Meta:
-        """
-        Metadata class of validation group model.
-        """
-
-        verbose_name = _('Validation group')
-
-    @property
-    def closed(self):
-        """
-        Check that the validation group is closed.
-
-        :return: True if the validation group is closed or False if not.
-        :rtype: bool
-        """
-
-        return self.close_date is not None
-
-    def close_group(self):
-        """
-        Close the validation group.
-        """
-
-        with transaction.atomic():
-            started_validations = Validation.objects.filter(
-                group=self,
-                status=Validation.STARTED
-            )
-            for started_validation in started_validations:
-                started_validation.cancel_validation()
-            finished_validations = Validation.objects.filter(
-                group=self,
-                status=Validation.FINISHED
-            )
-            for finished_validation in finished_validations:
-                finished_validation.close_validation()
-
-            self.close_date = timezone.now()
-            self.save()
-
 class Validation(CoreModel):
     """
     The Validation class is a model that represents a validation of site.
@@ -106,18 +44,16 @@ class Validation(CoreModel):
     STARTED = 0
     CANCELED = 1
     FINISHED = 2
-    CLOSED = 3
     STATUS_CHOICES = (
         (STARTED, _('Started')),
         (CANCELED, _('Canceled')),
         (FINISHED, _('Finished')),
-        (CLOSED, _('Closed')),
     )
 
-    group = models.ForeignKey(
-        ValidationGroup,
+    site = models.ForeignKey(
+        Site,
         on_delete=models.PROTECT,
-        verbose_name=_('Validation group')
+        verbose_name=_('Site')
     )
     user = models.ForeignKey(
         User,
@@ -193,17 +129,6 @@ class Validation(CoreModel):
 
         return self.status == Validation.FINISHED
 
-    @property
-    def closed(self):
-        """
-        Check that the validation is closed.
-
-        :return: True if the validation is closed or False if not.
-        :rtype: bool
-        """
-
-        return self.status == Validation.CLOSED
-
     def cancel_validation(self):
         """
         Cancel the validation, when the user not finish the validation of all
@@ -241,19 +166,6 @@ class Validation(CoreModel):
                 _('Only started validations can be finished.')
             )
 
-    def close_validation(self):
-        """
-        Close the validation, when the group is closed.
-        """
-
-        if self.finished:
-            self.status = Validation.CLOSED
-            self.save()
-        else:
-            raise ValidationError(
-                _('Only finished validations can be closed.')
-            )
-
 class Page(CoreModel):
     """
     The Page class is a model that represents a validated page of site.
@@ -280,7 +192,7 @@ class Page(CoreModel):
     def clean(self):
         super(Page, self).clean()
 
-        base_url = self.validation_site.group.site.base_url
+        base_url = self.validation_site.site.base_url
         if not self.page_url.startswith(base_url):
             raise ValidationError(
                 _('The page URL must starts with "{}".').format(base_url)

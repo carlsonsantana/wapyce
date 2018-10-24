@@ -5,14 +5,12 @@ Tests for models of validation app.
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import transaction
-from django.db.models import Q
 from django.db.utils import IntegrityError
 from django.test import TestCase
 
 from wapyce.validation.models import Site
 from wapyce.validation.models import Page
 from wapyce.validation.models import Validation
-from wapyce.validation.models import ValidationGroup
 
 # Create your tests here.
 class TestSite(TestCase):
@@ -91,94 +89,6 @@ class TestSite(TestCase):
             site.full_clean()
             site.save()
 
-class TestValidationGroup(TestCase):
-    """
-    Test for validation group model.
-    """
-
-    def setUp(self):
-        self.site = Site(
-            name='Site',
-            base_url='http://www.example.com/',
-            github_url='https://github.com/carlsonsantana/wapyce'
-        )
-        self.site.save()
-        self.user1 = User.objects.create_user(
-            username='user1',
-            email='user1@github.com',
-            password='user1password'
-        )
-        self.user2 = User.objects.create_user(
-            username='user2',
-            email='user2@github.com',
-            password='user2password'
-        )
-        self.user3 = User.objects.create_user(
-            username='user3',
-            email='user3@github.com',
-            password='user3password'
-        )
-
-    def tearDown(self):
-        groups = ValidationGroup.objects.filter(site=self.site)
-        for group in groups:
-            validations = Validation.objects.filter(group=group)
-            for validation in validations:
-                pages = Page.objects.filter(validation_site=validation)
-                for page in pages:
-                    page.delete()
-                validation.delete()
-            group.delete()
-        self.site.delete()
-        self.user1.delete()
-        self.user2.delete()
-        self.user3.delete()
-
-    def test_normal_save(self):
-        """
-        Test if django persist a valid validation group object.
-        """
-
-        group = ValidationGroup(site=self.site)
-        group.full_clean()
-        group.save()
-        self.assertEqual(
-            group,
-            ValidationGroup.objects.all().order_by('?').first()
-        )
-
-    def test_close_group(self):
-        """
-        Test if all validation are closed or canceled, when the group is
-        closed.
-        """
-
-        group = ValidationGroup(site=self.site)
-        group.save()
-
-        self.assertFalse(group.closed)
-
-        validation1 = Validation(group=group, user=self.user1)
-        validation1.save()
-        validation2 = Validation(group=group, user=self.user2)
-        validation2.save()
-        validation3 = Validation(group=group, user=self.user3)
-        validation3.save()
-        validation2.cancel_validation()
-        page = Page(validation_site=validation3, page_url=self.site)
-        page.save()
-        validation3.finish_validation()
-
-        group.close_group()
-        validation1.refresh_from_db()
-        validation2.refresh_from_db()
-        validation3.refresh_from_db()
-
-        self.assertTrue(group.closed)
-        self.assertTrue(validation1.canceled)
-        self.assertTrue(validation2.canceled)
-        self.assertTrue(validation3.closed)
-
 class TestValidation(TestCase):
     """
     Test for validation model.
@@ -201,23 +111,14 @@ class TestValidation(TestCase):
             email='user2@github.com',
             password='user2password'
         )
-        self.group1 = ValidationGroup(site=self.site)
-        self.group1.save()
-        self.group2 = ValidationGroup(site=self.site)
-        self.group2.save()
 
     def tearDown(self):
-        validations = Validation.objects.filter(
-            Q(group=self.group1)
-            | Q(group=self.group2)
-        )
+        validations = Validation.objects.filter(site=self.site)
         for validation in validations:
             pages = Page.objects.filter(validation_site=validation)
             for page in pages:
                 page.delete()
             validation.delete()
-        self.group1.delete()
-        self.group2.delete()
         self.site.delete()
         self.user1.delete()
         self.user2.delete()
@@ -227,21 +128,16 @@ class TestValidation(TestCase):
         Test if django persist a valid validation object.
         """
 
-        validation1 = Validation(group=self.group1, user=self.user1)
+        validation1 = Validation(site=self.site, user=self.user1)
         validation1.save()
         validation1.cancel_validation()
-        validation2 = Validation(group=self.group1, user=self.user2)
+        validation2 = Validation(site=self.site, user=self.user2)
         validation2.save()
         page = Page(validation_site=validation2, page_url=self.site.base_url)
         page.save()
         validation2.finish_validation()
 
-        validation3 = Validation(group=self.group2, user=self.user1)
-        validation3.save()
-        validation4 = Validation(group=self.group2, user=self.user2)
-        validation4.save()
-
-        self.assertEqual(4, Validation.objects.all().count())
+        self.assertEqual(2, Validation.objects.all().count())
 
     def test_unique_validation_user(self):
         """
@@ -249,9 +145,9 @@ class TestValidation(TestCase):
         """
 
         with self.assertRaises(ValidationError):
-            validation1 = Validation(group=self.group1, user=self.user1)
+            validation1 = Validation(site=self.site, user=self.user1)
             validation1.save()
-            validation2 = Validation(group=self.group2, user=self.user1)
+            validation2 = Validation(site=self.site, user=self.user1)
             validation2.clean()
             validation2.save()
 
@@ -272,9 +168,7 @@ class TestPage(TestCase):
             email='user@github.com',
             password='userpassword'
         )
-        self.group = ValidationGroup(site=self.site)
-        self.group.save()
-        self.validation = Validation(group=self.group, user=self.user)
+        self.validation = Validation(site=self.site, user=self.user)
         self.validation.save()
 
     def tearDown(self):
@@ -282,7 +176,6 @@ class TestPage(TestCase):
         for page in pages:
             page.delete()
         self.validation.delete()
-        self.group.delete()
         self.site.delete()
         self.user.delete()
 

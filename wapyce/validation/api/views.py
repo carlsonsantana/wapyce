@@ -12,7 +12,6 @@ from rest_framework.generics import UpdateAPIView
 
 from wapyce.validation.models import Site
 from wapyce.validation.models import Validation
-from wapyce.validation.models import ValidationGroup
 from wapyce.validation.models import Page
 from .serializers import ValidationSerializer
 from .serializers import PageSerializer
@@ -43,12 +42,11 @@ class NewValidationAPIView(CreateAPIView):
             )
 
         site = Site.objects.filter(
-            Q(validationgroup__isnull=True)
-            | Q(validationgroup__close_date__isnull=True)
-        ).exclude(validationgroup__validation__user=user).order_by('?').first()
-        group = ValidationGroup.objects.get_or_create(site=site)[0]
+            Q(validationsite__isnull=True)
+            | Q(validationsite__status=Validation.CANCELED)
+        ).order_by('?').first()
 
-        serializer.save(user=user, group=group)
+        serializer.save(user=user, site=site)
 
 class CancelValidationAPIView(UpdateAPIView):
     """
@@ -118,7 +116,7 @@ class NewPageAPIView(CreateAPIView):
         validation = serializer.validated_data['validation_site']
         if (validation.user != self.request.user) or (not validation.started):
             raise PermissionDenied()
-        base_url = validation.group.site.base_url
+        base_url = validation.site.base_url
         page_url = serializer.validated_data['page_url']
         if not page_url.startswith(base_url):
             raise ValidationError(
