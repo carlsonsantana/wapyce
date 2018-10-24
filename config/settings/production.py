@@ -30,3 +30,12 @@ MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 SOCIAL_AUTH_GITHUB_KEY = get_env_variable('GITHUB_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = get_env_variable('GITHUB_SECRET')
+
+# Security
+# https://docs.djangoproject.com/en/2.1/topics/security/
+
+SECURE_SSL_REDIRECT = True
+
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
