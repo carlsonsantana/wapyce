@@ -31,15 +31,10 @@ class NewValidationAPIView(CreateAPIView):
         """
 
         user = self.request.user
-        if (
-            Validation.objects.filter(
-                user=user,
-                status=Validation.STARTED
-            ).exists()
-        ):
-            raise ValidationError(
-                _('Already exists a validation for the same user.')
-            )
+        query = Validation.objects.filter(user=user, status=Validation.STARTED)
+        if query.exists():
+            validation = query.first()
+            validation.cancel_validation()
 
         site = Site.objects.filter(
             Q(validation__isnull=True)
