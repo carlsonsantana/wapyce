@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load l10n %}
+{% load staticfiles %}
+
+{% block title %}{% trans "Validations submited" %} - Wapyce{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <h2>{% trans "Validation submited" %}</h2>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-4"><strong>UUID</strong></div>
+        <div class="col-xs-8">{{ object.uuid }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4"><strong>Site</strong></div>
+        <div class="col-xs-8"><a href="{{ object.site.base_url }}" target="_blank">{{ object.site.base_url }}</a></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4"><strong>GitHub project URL</strong></div>
+        <div class="col-xs-8"><a href="{{ object.site.github_url }}" target="_blank">{{ object.site.github_url }}</a></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4"><strong>User</strong></div>
+        <div class="col-xs-8"><a href="https://github.com/{{ object.user }}" target="_blank">{{ object.user }}</a></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4"><strong>Start date</strong></div>
+        <div class="col-xs-8">{{ object.start_date|localize }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4"><strong>End date</strong></div>
+        <div class="col-xs-8">{{ object.end_date|localize }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4"><strong>Validation status</strong></div>
+        <div class="col-xs-8">{{ object.get_status_display }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <h3>Validated pages</h3>
+        </div>
+      </div>
+      {% for page in object.page_set.all %}
+      <div class="row">
+        <div class="col-xs-12">
+          <h4>Page <small><a href="{{ page.page_url }}" target="_blank">{{ page.page_url }}</a></small></h4>
+          {% for issue in page.issuepage_set.all %}
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-12"><h5>Issue <small>{{ issue.uuid }}</small></h5></div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4"><strong>Selector</strong></div>
+              <div class="col-xs-8">{{ issue.selector }}</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4"><strong>Context</strong></div>
+              <div class="col-xs-8">{{ issue.context }}</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4"><strong>Code</strong></div>
+              <div class="col-xs-8">{{ issue.code }}</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4"><strong>Message</strong></div>
+              <div class="col-xs-8">{{ issue.message }}</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4"><strong>Type</strong></div>
+              <div class="col-xs-8">{{ issue.get_issue_type_display }}</div>
+            </div>
+          </div>
+          <hr />
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

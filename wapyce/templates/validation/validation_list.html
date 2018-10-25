@@ -24,7 +24,7 @@
         <tbody>
           {% for validation in object_list %}
             <tr>
-              <td>{{ validation.uuid }}</td>
+              <td><a href="{% url 'detail_validation' validation.uuid %}">{{ validation.uuid }}</a></td>
               <td><a href="{{ validation.site.base_url }}" target="_blank">{{ validation.site.base_url }}</a></td>
               <td><a href="https://github.com/{{ validation.user }}" target="_blank">{{ validation.user }}</a></td>
               <td>{{ validation.start_date|localize }}</td>
