@@ -32,7 +32,7 @@ class Command(BaseCommand):
             page__issuepage__isnull=False
         ).select_related('site').select_related('user')
         for validation in validations:
-            repo = github_connection.get_repo('wapyce/test')
+            repo = github_connection.get_repo(validation.site.name)
 
             pages = Page.objects.filter(
                 validation_site=validation
