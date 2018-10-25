@@ -26,6 +26,7 @@ To execute the Wapyce follow these instructions:
     export DATABASE_PORT=5432
     export GITHUB_KEY=GITHUB_KEY
     export GITHUB_SECRET=GITHUB_SECRET
+    export GITHUB_PERSONAL_ACCESS_TOKEN=GITHUB_PERSONAL_ACCESS_TOKEN
 
     # For development environment
     export DJANGO_SETTINGS_MODULE=config.settings.local
@@ -36,6 +37,7 @@ To execute the Wapyce follow these instructions:
     export DATABASE_LOCAL_PORT=5432
     export GITHUB_LOCAL_KEY=GITHUB_LOCAL_KEY
     export GITHUB_LOCAL_SECRET=GITHUB_LOCAL_SECRET
+    export GITHUB_LOCAL_PERSONAL_ACCESS_TOKEN=GITHUB_LOCAL_PERSONAL_ACCESS_TOKEN
 
     # For test environment
     export DJANGO_SETTINGS_MODULE=config.settings.test
