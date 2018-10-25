@@ -59,4 +59,3 @@ class Command(BaseCommand):
                     validation.uuid
                 )
             )))
-            break
