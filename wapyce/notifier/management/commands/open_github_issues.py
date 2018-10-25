@@ -10,6 +10,7 @@ from django.utils.translation import gettext as _
 
 from github import Github
 
+from wapyce.accessibility.models import IssuePage
 from wapyce.notifier.models import GithubIssue
 from wapyce.validation.models import Page
 from wapyce.validation.models import Validation
@@ -29,33 +30,37 @@ class Command(BaseCommand):
         validations = Validation.objects.filter(
             status=Validation.FINISHED,
             githubissue__isnull=True,
-            page__issuepage__isnull=False
         ).select_related('site').select_related('user')
         for validation in validations:
-            repo = github_connection.get_repo(validation.site.name)
+            if (
+                IssuePage.objects.filter(
+                    page__validation_site=validation
+                ).exists()
+            ):
+                repo = github_connection.get_repo(validation.site.name)
 
-            pages = Page.objects.filter(
-                validation_site=validation
-            ).prefetch_related(
-                'issuepage_set'
-            ).prefetch_related('issuepage_set__code')
+                pages = Page.objects.filter(
+                    validation_site=validation
+                ).prefetch_related(
+                    'issuepage_set'
+                ).prefetch_related('issuepage_set__code')
 
-            issue = repo.create_issue(
-                title=_('Accessibility errors found in your template'),
-                body=template.render({
-                    'validation': validation,
-                    'pages': pages
-                }).replace('\n\n', '\n')
-            )
-            GithubIssue.objects.create(
-                validation_site=validation,
-                number=issue.number,
-                created_at=issue.created_at,
-            )
-            self.stdout.write(self.style.SUCCESS(_(
-                'Create the issue #{}({}) of validation {}.'.format(
-                    issue.id,
-                    issue.html_url,
-                    validation.uuid
+                issue = repo.create_issue(
+                    title=_('Accessibility errors found in your template'),
+                    body=template.render({
+                        'validation': validation,
+                        'pages': pages
+                    }).replace('\n\n', '\n')
                 )
-            )))
+                GithubIssue.objects.create(
+                    validation_site=validation,
+                    number=issue.number,
+                    created_at=issue.created_at,
+                )
+                self.stdout.write(self.style.SUCCESS(_(
+                    'Create the issue #{}({}) of validation {}.'.format(
+                        issue.id,
+                        issue.html_url,
+                        validation.uuid
+                    )
+                )))
