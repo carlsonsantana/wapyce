@@ -31,6 +31,7 @@ MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 SOCIAL_AUTH_GITHUB_KEY = get_env_variable('GITHUB_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = get_env_variable('GITHUB_SECRET')
 GITHUB_PERSONAL_ACCESS_TOKEN = get_env_variable('GITHUB_PERSONAL_ACCESS_TOKEN')
+WAPYCE_BASE_URL = get_env_variable('WAPYCE_BASE_URL')
 
 # Security
 # https://docs.djangoproject.com/en/2.1/topics/security/

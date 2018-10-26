@@ -27,6 +27,7 @@ To execute the Wapyce follow these instructions:
     export GITHUB_KEY=GITHUB_KEY
     export GITHUB_SECRET=GITHUB_SECRET
     export GITHUB_PERSONAL_ACCESS_TOKEN=GITHUB_PERSONAL_ACCESS_TOKEN
+    export WAPYCE_BASE_URL=https://wapyce.herokuapp.com/
 
     # For development environment
     export DJANGO_SETTINGS_MODULE=config.settings.local
