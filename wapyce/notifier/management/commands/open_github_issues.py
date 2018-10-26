@@ -51,7 +51,8 @@ class Command(BaseCommand):
                     title=_('Accessibility errors found in your template'),
                     body=template.render({
                         'validation': validation,
-                        'pages': pages
+                        'pages': pages,
+                        'wapyce_base_url': settings.WAPYCE_BASE_URL,
                     }).replace('\n\n', '\n')
                 )
                 GithubIssue.objects.create(

@@ -11,4 +11,4 @@ The user @{{ validation.user }} validate your site template "{{ validation.site.
 {% endfor %}
 {% endfor %}{% endautoescape %}
 You can check these accessibility errors using [pa11y](https://github.com/pa11y/pa11y).
-You can view the [full validation results in our website]({% url 'detail_validation' validation.uuid %}).
+You can view the [full validation results in our website]({{ wapyce_base_url }}{% url 'detail_validation' validation.uuid %}).
