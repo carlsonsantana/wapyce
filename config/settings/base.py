@@ -150,3 +150,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'wapyce', 'static')]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'wapyce', 'staticfiles')
+
+GITHUB_RATE_LIMIT_ISSUES = 30

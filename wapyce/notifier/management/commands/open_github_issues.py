@@ -31,7 +31,9 @@ class Command(BaseCommand):
             status=Validation.FINISHED,
             githubissue__isnull=True,
         ).select_related('site').select_related('user')
-        for validation in validations:
+        for index, validation in enumerate(validations):
+            if index >= settings.GITHUB_RATE_LIMIT_ISSUES:
+                break
             if (
                 IssuePage.objects.filter(
                     page__validation_site=validation
