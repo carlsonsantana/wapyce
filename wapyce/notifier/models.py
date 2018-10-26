@@ -14,7 +14,7 @@ class GithubIssue(models.Model):
     The GithubIssue class is a model that represents a issue of GitHub.
     """
 
-    validation_site = models.ForeignKey(
+    validation_site = models.OneToOneField(
         Validation,
         on_delete=models.PROTECT,
         verbose_name=_('Validation')
