@@ -34,36 +34,41 @@ class Command(BaseCommand):
         for index, validation in enumerate(validations):
             if index >= settings.GITHUB_RATE_LIMIT_ISSUES:
                 break
-            if (
+            if not (
                 IssuePage.objects.filter(
                     page__validation_site=validation
                 ).exists()
             ):
-                repo = github_connection.get_repo(validation.site.name)
+                continue
 
-                pages = Page.objects.filter(
-                    validation_site=validation
-                ).prefetch_related(
-                    'issuepage_set'
-                ).prefetch_related('issuepage_set__code')
+            repo = github_connection.get_repo(validation.site.name)
 
-                issue = repo.create_issue(
-                    title=_('Accessibility errors found in your template'),
-                    body=template.render({
-                        'validation': validation,
-                        'pages': pages,
-                        'wapyce_base_url': settings.WAPYCE_BASE_URL,
-                    }).replace('\n\n', '\n')
+            if repo.archived:
+                continue
+
+            pages = Page.objects.filter(
+                validation_site=validation
+            ).prefetch_related(
+                'issuepage_set'
+            ).prefetch_related('issuepage_set__code')
+
+            issue = repo.create_issue(
+                title=_('Accessibility errors found in your template'),
+                body=template.render({
+                    'validation': validation,
+                    'pages': pages,
+                    'wapyce_base_url': settings.WAPYCE_BASE_URL,
+                }).replace('\n\n', '\n')
+            )
+            GithubIssue.objects.create(
+                validation_site=validation,
+                number=issue.number,
+                created_at=issue.created_at,
+            )
+            self.stdout.write(self.style.SUCCESS(_(
+                'Create the issue #{}({}) of validation {}.'.format(
+                    issue.id,
+                    issue.html_url,
+                    validation.uuid
                 )
-                GithubIssue.objects.create(
-                    validation_site=validation,
-                    number=issue.number,
-                    created_at=issue.created_at,
-                )
-                self.stdout.write(self.style.SUCCESS(_(
-                    'Create the issue #{}({}) of validation {}.'.format(
-                        issue.id,
-                        issue.html_url,
-                        validation.uuid
-                    )
-                )))
+            )))
