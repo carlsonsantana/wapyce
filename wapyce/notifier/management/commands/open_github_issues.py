@@ -13,6 +13,7 @@ from github import Github
 from wapyce.accessibility.models import IssuePage
 from wapyce.notifier.models import GithubIssue
 from wapyce.validation.models import Page
+from wapyce.validation.models import Site
 from wapyce.validation.models import Validation
 
 
@@ -30,6 +31,7 @@ class Command(BaseCommand):
         validations = Validation.objects.filter(
             status=Validation.FINISHED,
             githubissue__isnull=True,
+            site__status=Site.ACTIVE,
         ).select_related('site').select_related('user')
         for index, validation in enumerate(validations):
             if index >= settings.GITHUB_RATE_LIMIT_ISSUES:
