@@ -43,7 +43,7 @@ class Command(BaseCommand):
 
             repo = github_connection.get_repo(validation.site.name)
 
-            if repo.archived:
+            if repo.archived or (not repo.has_issues):
                 continue
 
             pages = Page.objects.filter(
