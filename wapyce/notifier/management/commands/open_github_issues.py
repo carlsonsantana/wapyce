@@ -46,6 +46,9 @@ class Command(BaseCommand):
             repo = github_connection.get_repo(validation.site.name)
 
             if repo.archived or (not repo.has_issues):
+                self.stdout.write(self.style.WARNING(_(
+                    'The repository "{}" isn\'t enabled to open issues.'
+                )))
                 continue
 
             pages = Page.objects.filter(
