@@ -47,7 +47,9 @@ class Command(BaseCommand):
 
             if repo.archived or (not repo.has_issues):
                 self.stdout.write(self.style.WARNING(_(
-                    'The repository "{}" isn\'t enabled to open issues.'
+                    (
+                        'The repository "{}" isn\'t enabled to open issues.'
+                    ).format(validation.site.github_url)
                 )))
                 continue
 
