@@ -1,4 +1,4 @@
-The user @{{ validation.user }} validate your site template "{{ validation.site.base_url }}" and found these accessibility errors:
+The user **{{ validation.user }}** validate your site template "{{ validation.site.base_url }}" and found these accessibility errors:
 {% autoescape off %}{% for page in pages %}
 * Page {{ page.page_url }}:
 {% for issue in page.issuepage_set.all %}
