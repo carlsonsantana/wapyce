@@ -26,6 +26,7 @@ class Command(BaseCommand):
     help = 'Notify the owner of repository of errors found.'
 
     def handle(self, *args, **options):
+        notifications = 0
         github_connection = Github(settings.GITHUB_PERSONAL_ACCESS_TOKEN)
         template = get_template('notifier/github_issue.md')
         validations = Validation.objects.filter(
@@ -33,8 +34,8 @@ class Command(BaseCommand):
             githubissue__isnull=True,
             site__status=Site.ACTIVE,
         ).select_related('site').select_related('user')
-        for index, validation in enumerate(validations):
-            if index >= settings.GITHUB_RATE_LIMIT_ISSUES:
+        for validation in validations:
+            if notifications >= settings.GITHUB_RATE_LIMIT_ISSUES:
                 break
             if not (
                 IssuePage.objects.filter(
@@ -79,3 +80,4 @@ class Command(BaseCommand):
                     validation.uuid
                 )
             )))
+            notifications = notifications + 1
