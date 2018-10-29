@@ -29,4 +29,6 @@ class NewIssueAPIView(CreateAPIView):
             code=serializer.validated_data['code']
         )
 
-        serializer.save(code=code[0])
+        context = serializer.validated_data['context'].replace('\n', ' ')
+
+        serializer.save(code=code[0], context=context)
